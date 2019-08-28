@@ -1,7 +1,7 @@
-exports.up = function(knex, Promise) {
+exports.up = function(knex) {
   return knex.schema.createTable('cars', tbl => {
     tbl.increments('id');
-    tbl.string('VIN', 17)
+    tbl.string('VIN')
       .notNullable()
       .unique();
     tbl.string('Make')
