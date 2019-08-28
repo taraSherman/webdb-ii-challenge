@@ -39,6 +39,22 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  const car = req.body;
+
+  db('cars')
+    .insert(car)
+    .then(newcar => {
+      res.status(201).json(newcar[0]);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: 'Failed to create new record.'
+      });
+    });
+});
+
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   db('cars')
@@ -63,26 +79,9 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-  const car = req.body;
-
-  db('cars')
-    .insert(car)
-    .then(newcar => {
-      res.status(201).json(newcar[0]);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: 'Failed to create new record.'
-      });
-    });
-});
-
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
-
   db('cars')
     .where({ id })
     .update(changes)
